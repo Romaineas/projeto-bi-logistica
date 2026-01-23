@@ -1,8 +1,8 @@
 # projeto-bi-logistica
 
-# 📊 Projeto BI - Logística e Delivery
+#  Projeto BI - Logística e Delivery
 
-## 🎯 Sobre o Projeto
+##  Sobre o Projeto
 
 Dashboard completo de Business Intelligence para análise de operações de logística e delivery, desenvolvido para demonstrar capacidades analíticas avançadas em BI.
 
@@ -10,14 +10,14 @@ Dashboard completo de Business Intelligence para análise de operações de log�
 
 ![Dashboard Preview](imagens/dashboard_preview.png)
 
-## 🛠️ Tecnologias
+##  Tecnologias
 
 - SQL Server / PostgreSQL
 - Power BI Desktop
 - DAX (80+ medidas customizadas)
 - Power Query (ETL)
 
-## 📊 Principais Funcionalidades
+##  Principais Funcionalidades
 
 - ✅ KPIs operacionais em tempo real
 - ✅ Análise temporal (MoM, YoY, YTD)
