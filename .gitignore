@@ -1,0 +1,39 @@
+# .gitignore - Arquivos a ignorar no repositório
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+*.log
+
+# IDE e Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+
+# Power BI
+*.pbix-rels
+*.pbix.backup
+.pbi/
+
+# SQL Server
+*.mdf
+*.ldf
+*.ndf
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.bak
+
+# Dados sensíveis
+secrets.json
+config.local.json
+credentials.txt
+
+# Dependências (se houver)
+node_modules/
+/packages/
