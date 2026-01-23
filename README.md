@@ -8,7 +8,7 @@ Dashboard completo de Business Intelligence para análise de operações de log�
 
 ## 📸 Preview
 
-![Dashboard Preview](imagens/dashboard_preview.png)
+![Dashboard Preview]([imagens/dashboard_preview.png](https://claude.ai/public/artifacts/6d343baa-5c5e-473e-bb72-58962c1b10de)
 
 ##  Tecnologias
 
