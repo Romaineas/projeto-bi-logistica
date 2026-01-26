@@ -1,44 +1,90 @@
-# Projeto BI - Business Intelligence
+# 📦 Projeto BI - Logística e Delivery
 
-## 📋 Descrição
-Projeto de Business Intelligence com análise de dados, estruturação de banco de dados e dashboards em Power BI.
+## 🎯 Sobre o Projeto
 
-## 📁 Estrutura do Projeto
+Dashboard completo de Business Intelligence para análise de operações de logística e delivery, desenvolvido para demonstrar capacidades analíticas avançadas em BI.
 
+## 🛠️ Tecnologias
+
+- SQL Server / PostgreSQL
+- Power BI Desktop
+- DAX (80+ medidas customizadas)
+- Power Query (ETL)
+
+## 📊 Principais Funcionalidades
+
+- ✅ KPIs operacionais em tempo real
+- ✅ Análise temporal (MoM, YoY, YTD)
+- ✅ Ranking de entregadores
+- ✅ Análise geográfica por região
+- ✅ Comparativo meta vs realizado
+- ✅ Dashboard interativo com filtros dinâmicos
+
+## 📂 Estrutura do Projeto
 ```
-BI-projects/
-├── scripts/              # Scripts SQL
-│   ├── 01_criar_tabelas.sql       # Criação de tabelas
-│   ├── 02_popular_dados.sql       # Inserção de dados
+projeto-bi-logistica/
+├── .gitignore
+├── README.md
+├── scripts/
+│   ├── 01_criar_tabelas.sql       # Criação de estrutura
+│   ├── 02_popular_dados.sql       # População de dados
 │   └── 03_queries_analise.sql     # Queries de análise
-├── power-bi/             # Arquivos Power BI
+├── power-bi/
 │   └── 04_medidas_dax.txt         # Medidas DAX
-├── documentacao/         # Documentação
-│   └── documentacao_completa.md   # Documentação completa
-├── imagens/              # Prints e imagens
-├── README.md             # Este arquivo
-└── .gitignore            # Arquivos a ignorar
+├── documentacao/
+│   └── documentacao_completa.md   # Documentação técnica
+└── imagens/
+    └── (screenshots dos dashboards)
 ```
 
 ## 🚀 Como Usar
 
-1. Execute os scripts SQL na ordem:
-   - `01_criar_tabelas.sql` - Cria a estrutura de tabelas
-   - `02_popular_dados.sql` - Popula com dados de exemplo
-   - `03_queries_analise.sql` - Queries para análise
+### 1. Configurar Banco de Dados
+```sql
+CREATE DATABASE DB_Logistica_Delivery;
+USE DB_Logistica_Delivery;
+```
 
-2. Abra o arquivo Power BI e importe os dados
+Execute os scripts na ordem:
+- `01_criar_tabelas.sql`
+- `02_popular_dados.sql`
 
-3. Verifique as medidas DAX em `04_medidas_dax.txt`
+### 2. Conectar no Power BI
 
-## 📊 Ferramentas Utilizadas
+1. Abra o Power BI Desktop
+2. Obter Dados → SQL Server
+3. Importe as tabelas
+4. Configure relacionamentos
+5. Adicione as medidas DAX
 
-- SQL Server
-- Power BI
-- Git
+## 📈 Métricas Principais
+
+| Métrica | Valor | Variação |
+|---------|-------|----------|
+| Total Entregas | 40 | - |
+| Faturamento | R$ 1.5K+ | - |
+| Tempo Médio | ~30 min | ✅ Dentro da meta |
+| Taxa Sucesso | >90% | ✅ Dentro da meta |
+
+## 💡 Requisitos Atendidos
+
+1. ✅ Monitorar taxa de entregas no prazo vs atrasadas
+2. ✅ Identificar regiões com menor performance
+3. ✅ Avaliar produtividade individual dos entregadores
+4. ✅ Analisar correlação entre volume de pedidos e faturamento
+5. ✅ Identificar padrões sazonais e dias de pico
 
 ## 👤 Autor
-Romaine Santos (romaine.santos@outlook.com)
 
-## 📝 Licença
-MIT
+**Romaine Santos**
+- GitHub: [@Romaineas](https://github.com/Romaineas)
+- Email: romaine.santos@outlook.com
+
+## 📄 Licença
+
+Este projeto foi desenvolvido para fins de portfólio e demonstração.
+
+---
+
+⭐ **Se este projeto foi útil, considere dar uma estrela!**
+
