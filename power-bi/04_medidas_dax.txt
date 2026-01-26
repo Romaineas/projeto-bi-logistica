@@ -1,77 +1,34 @@
--- ============================================================
--- Medidas DAX para Power BI
--- Descrição: Medidas calculadas para análise visual
--- Data: 2026-01-23
--- ============================================================
+// ========================================
+// MEDIDAS DAX - PROJETO BI LOGÍSTICA
+// ========================================
 
-// ========== MEDIDAS DE VENDAS ==========
+// MEDIDAS BÁSICAS
+Total_Entregas = COUNTROWS(fato_entregas)
 
-// Total de Vendas (Receita)
-Total Vendas = SUM(Vendas[ValorTotal])
+Faturamento = SUM(fato_entregas[valor_entrega])
 
-// Quantidade de Transações
-Qtd Transações = COUNTA(Vendas[VendaID])
+Ticket_Medio = DIVIDE([Faturamento], [Total_Entregas], 0)
 
-// Ticket Médio
-Ticket Médio = [Total Vendas] / [Qtd Transações]
+Tempo_Medio = AVERAGE(fato_entregas[tempo_entrega_min])
 
-// ========== MEDIDAS DE PRODUTOS ==========
+// MEDIDAS DE PERFORMANCE
+Taxa_Sucesso = 
+DIVIDE(
+    CALCULATE([Total_Entregas], fato_entregas[status] = "Entregue"),
+    [Total_Entregas],
+    0
+) * 100
 
-// Total de Produtos Vendidos
-Total Produtos Vendidos = SUM(Vendas[Quantidade])
-
-// Estoque Total
-Estoque Total = SUM(Produtos[Estoque])
-
-// Valor de Estoque
-Valor Estoque = SUMPRODUCT(Produtos[Preco], Produtos[Estoque])
-
-// ========== MEDIDAS DE CLIENTES ==========
-
-// Total de Clientes
-Total Clientes = DISTINCTCOUNT(Clientes[ClienteID])
-
-// Clientes Ativos (com vendas)
-Clientes Ativos = DISTINCTCOUNT(Vendas[ClienteID])
-
-// ========== MEDIDAS DE VARIAÇÃO ==========
-
-// Vendas Mês Atual
-Vendas Mês Atual = 
+// COMPARAÇÃO TEMPORAL
+Entregas_Mes_Anterior = 
 CALCULATE(
-    [Total Vendas],
-    MONTH(Vendas[DataVenda]) = MONTH(TODAY())
+    [Total_Entregas],
+    DATEADD(dim_calendario[data], -1, MONTH)
 )
 
-// Crescimento em Relação ao Mês Anterior
-Crescimento MoM = 
-VAR VendasAtual = [Vendas Mês Atual]
-VAR VendasAnterior = CALCULATE([Total Vendas], DATEADD(Vendas[DataVenda], -1, MONTH))
-RETURN
-DIVIDE(VendasAtual - VendasAnterior, VendasAnterior, 0)
-
-// ========== MEDIDAS DE ANÁLISE DIMENSIONAL ==========
-
-// Receita por Categoria
-Receita Categoria = 
-CALCULATE([Total Vendas], FILTER(ALL(Produtos[Categoria]), VALUES(Produtos[Categoria])))
-
-// Vendas por Estado
-Vendas Estado = 
-CALCULATE(
-    [Total Vendas],
-    FILTER(ALL(Clientes[Estado]), VALUES(Clientes[Estado]))
-)
-
-// ========== MEDIDAS KPI ==========
-
-// Meta Vendas (exemplo: R$ 100.000)
-Meta Vendas = 100000
-
-// % Atingimento de Meta
-% Atingimento = DIVIDE([Total Vendas], [Meta Vendas], 0)
-
-// Status Meta (Verde/Amarelo/Vermelho)
-Status Meta = 
-IF([% Atingimento] >= 1, "✅ Meta Atingida",
-IF([% Atingimento] >= 0.8, "⚠️ Em Progresso", "❌ Abaixo da Meta"))
+Var_MoM = 
+DIVIDE(
+    [Total_Entregas] - [Entregas_Mes_Anterior],
+    [Entregas_Mes_Anterior],
+    0
+) * 100
