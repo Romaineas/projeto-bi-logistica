@@ -32,3 +32,4 @@ DIVIDE(
     [Entregas_Mes_Anterior],
     0
 ) * 100
+
