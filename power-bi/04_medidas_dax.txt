@@ -1,8 +1,75 @@
+🔧 FASE 3: TRANSFORMAÇÃO DOS DADOS (ETL)
+
+
+# 3.2 Power Query - Transformações Aplicadas
+
+Etapa 1: Limpeza de Dados
+
+// Remover linhas com valores nulos em campos críticos
+= Table.SelectRows(Fonte, each [id_entrega] <> null and [data_entrega] <> null)
+
+// Padronizar formato de datas
+= Table.TransformColumnTypes(#"Linhas Filtradas",{
+    {"data_pedido", type datetime}, 
+    {"data_entrega", type datetime}
+})
+
+// Remover espaços em branco dos nomes
+= Table.TransformColumns(#"Tipo Alterado",{
+    {"nome_entregador", Text.Trim}
+})
+
+
+# Etapa 2: Criação de Colunas Calculadas
+
+
+// Calcular tempo de entrega em minutos
+= Table.AddColumn(#"Etapa Anterior", "tempo_entrega_min", 
+    each Duration.TotalMinutes([data_entrega] - [data_coleta]))
+
+// Classificar entregas (No Prazo / Atrasada)
+= Table.AddColumn(#"Tempo Calculado", "classificacao_tempo", 
+    each if [tempo_entrega_min] <= 30 then "No Prazo" else "Atrasada")
+
+// Extrair dia da semana
+= Table.AddColumn(#"Classificação Adicionada", "dia_semana", 
+    each Date.DayOfWeekName([data_pedido]))
+
+// Extrair hora do pedido
+= Table.AddColumn(#"Dia Semana", "hora_pedido", 
+    each Time.Hour([data_pedido]))
+
+// Criar faixa de horário
+= Table.AddColumn(#"Hora Extraída", "turno", 
+    each if [hora_pedido] >= 6 and [hora_pedido] < 12 then "Manhã"
+    else if [hora_pedido] >= 12 and [hora_pedido] < 18 then "Tarde"
+    else if [hora_pedido] >= 18 and [hora_pedido] < 24 then "Noite"
+    else "Madrugada")
+
+
+# Etapa 3: Tratamento de Outliers
+
+// Identificar entregas com tempo anormal (>120 minutos)
+= Table.AddColumn(#"Etapa Anterior", "outlier_tempo", 
+    each if [tempo_entrega_min] > 120 then "Sim" else "Não")
+
+// Filtrar apenas valores válidos para análises principais
+= Table.SelectRows(#"Outlier Identificado", 
+    each [tempo_entrega_min] <= 120 and [valor_entrega] > 0)
+
+
+
+
 // ========================================
 // MEDIDAS DAX - PROJETO BI LOGÍSTICA
 // ========================================
 
+
+
+
+
 // MEDIDAS BÁSICAS
+
 Total_Entregas = COUNTROWS(fato_entregas)
 
 Faturamento = SUM(fato_entregas[valor_entrega])
@@ -11,6 +78,7 @@ Ticket_Medio = DIVIDE([Faturamento], [Total_Entregas], 0)
 
 Tempo_Medio = AVERAGE(fato_entregas[tempo_entrega_min])
 
+
 // MEDIDAS DE PERFORMANCE
 Taxa_Sucesso = 
 DIVIDE(
@@ -18,6 +86,7 @@ DIVIDE(
     [Total_Entregas],
     0
 ) * 100
+
 
 // COMPARAÇÃO TEMPORAL
 Entregas_Mes_Anterior = 
@@ -32,4 +101,56 @@ DIVIDE(
     [Entregas_Mes_Anterior],
     0
 ) * 100
+
+
+# 4.4 Medidas de Ranking
+
+
+// Rank Entregador por Volume
+Rank_Entregador = 
+RANKX(
+    ALL(dim_entregadores[nome]),
+    [Total_Entregas],
+    ,
+    DESC,
+    DENSE
+)
+
+// Top 5 Entregadores (filtro)
+
+Top5_Entregadores = IF([Rank_Entregador] <= 5, 1, 0)
+
+// Percentual da Região no Total
+Perc_Regiao = 
+DIVIDE(
+    [Total_Entregas],
+    CALCULATE([Total_Entregas], ALL(dim_regioes)),
+    0
+) * 100
+
+
+# 4.5 Medidas Condicionais
+
+
+// Classificação de Performance
+Classificacao_Performance = 
+VAR TaxaSucesso = [Taxa_Sucesso]
+RETURN
+    SWITCH(
+        TRUE(),
+        TaxaSucesso >= 98, "Excelente",
+        TaxaSucesso >= 95, "Bom",
+        TaxaSucesso >= 90, "Regular",
+        "Crítico"
+    )
+
+// Alerta de Atraso
+Alerta_Atraso = 
+IF([Taxa_Atraso] > 10, "⚠️ ATENÇÃO", "✓ OK")
+
+// Meta Atingida
+Meta_Atingida = 
+IF([Total_Entregas] >= [Meta_Entregas], "Sim", "Não")
+
+
 
