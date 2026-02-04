@@ -1,17 +1,17 @@
-# 📦 Projeto BI - Logística e Delivery
+#  Projeto BI - Logística e Delivery
 
-## 🎯 Sobre o Projeto
+##  Sobre o Projeto
 
 Dashboard completo de Business Intelligence para análise de operações de logística e delivery, desenvolvido para demonstrar capacidades analíticas avançadas em BI.
 
-## 🛠️ Tecnologias
+##  Tecnologias
 
 - SQL Server / PostgreSQL
 - Power BI Desktop
 - DAX (80+ medidas customizadas)
 - Power Query (ETL)
 
-## 📊 Principais Funcionalidades
+##  Principais Funcionalidades
 
 - ✅ KPIs operacionais em tempo real
 - ✅ Análise temporal (MoM, YoY, YTD)
@@ -57,7 +57,7 @@ Execute os scripts na ordem:
 4. Configure relacionamentos
 5. Adicione as medidas DAX
 
-## 📈 Métricas Principais
+##  Métricas Principais
 
 | Métrica | Valor | Variação |
 |---------|-------|----------|
@@ -66,7 +66,7 @@ Execute os scripts na ordem:
 | Tempo Médio | ~30 min | ✅ Dentro da meta |
 | Taxa Sucesso | >90% | ✅ Dentro da meta |
 
-## 💡 Requisitos Atendidos
+##  Requisitos Atendidos
 
 1. ✅ Monitorar taxa de entregas no prazo vs atrasadas
 2. ✅ Identificar regiões com menor performance
@@ -74,7 +74,7 @@ Execute os scripts na ordem:
 4. ✅ Analisar correlação entre volume de pedidos e faturamento
 5. ✅ Identificar padrões sazonais e dias de pico
 
-## 👤 Autor
+##  Autor
 
 **Romaine Santos**
 - GitHub: [@Romaineas](https://github.com/Romaineas)
